@@ -47,49 +47,45 @@
         <main class="main-content">
             <header class="main-header" style="justify-content: space-between;">
                 <div class="welcome">
-                    <h2>Histórico de Movimentações 🌿</h2>
-                    <p>Registro de entradas e saídas do seu estoque.</p>
+                    <h2>Movimentações de Estoque 🚚</h2>
+                    <p>Registre vendas, entradas de produção e ajustes de peças.</p>
                 </div>
-                <button class="btn-novo-produto" style="background-color: var(--sidebar-bg); color: white; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-plus-circle"></i> Nova Movimentação
-                </button>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="abrirModalMovimentacao('ENTRADA')" style="background-color: #2E7D32; color: white; border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-arrow-down"></i> + Entrada
+                    </button>
+                    <button onclick="abrirModalMovimentacao('SAIDA')" style="background-color: #C62828; color: white; border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-arrow-up"></i> - Saída (Venda)
+                    </button>
+                </div>
             </header>
 
             <div class="card table-card" style="margin-top: 10px;">
-                <h3>Registros Recentes</h3>
+                <h3>Histórico de Movimentações</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th>Data</th>
+                            <th>Data/Hora</th>
                             <th>Tipo</th>
-                            <th>SKU / Produto</th>
-                            <th>Qtd.</th>
+                            <th>SKU</th>
+                            <th>Qtd</th>
+                            <th>Motivo / Observação</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabela-movimentacoes">
                         <tr>
-                            <td>25/07/2026</td>
-                            <td><span style="background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Venda</span></td>
-                            <td>TSU-001-VIN-GG (Deus é Fiel)</td>
-                            <td class="qty-out">-2</td>
+                            <td>25/07/2026 08:30</td>
+                            <td><span style="background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 4px; font-weight: bold;">ENTRADA</span></td>
+                            <td>TSU-001-VIN-GG</td>
+                            <td>+10</td>
+                            <td>Entrada de Lote Produção</td>
                         </tr>
                         <tr>
-                            <td>25/07/2026</td>
-                            <td><span style="background: #E3F2FD; color: #1565C0; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Entrada</span></td>
-                            <td>TSO-002-VER-P (Lugar Secreto)</td>
-                            <td class="qty-in">+10</td>
-                        </tr>
-                        <tr>
-                            <td>24/07/2026</td>
-                            <td><span style="background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Venda</span></td>
-                            <td>TSB-003-BEG-M (Graça Sobre Graça)</td>
-                            <td class="qty-out">-1</td>
-                        </tr>
-                        <tr>
-                            <td>23/07/2026</td>
-                            <td><span style="background: #FFF3E0; color: #E65100; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Ajuste</span></td>
-                            <td>TSU-005-AMA-G (Ele Reina)</td>
-                            <td class="qty-out">-1</td>
+                            <td>25/07/2026 09:15</td>
+                            <td><span style="background: #FFEBEE; color: #C62828; padding: 4px 8px; border-radius: 4px; font-weight: bold;">SAÍDA</span></td>
+                            <td>TSO-002-VER-P</td>
+                            <td>-1</td>
+                            <td>Venda e-Commerce #1042</td>
                         </tr>
                     </tbody>
                 </table>
@@ -101,6 +97,41 @@
         </main>
     </div>
 
+    <!-- MODAL DE MOVIMENTAÇÃO (ENTRADA / SAÍDA) -->
+    <div id="modal-movimentacao" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+        <div style="background: white; padding: 25px; border-radius: 12px; max-width: 450px; width: 90%; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 id="mov-titulo" style="margin: 0;"><i class="fas fa-exchange-alt"></i> Nova Movimentação</h3>
+                <button onclick="fecharModalMovimentacao()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+
+            <form id="form-movimentacao" onsubmit="salvarMovimentacao(event)">
+                <input type="hidden" id="mov-tipo-val" value="ENTRADA">
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">SKU do Produto:</label>
+                    <input type="text" id="mov-sku" placeholder="Ex: TSU-001-VIN-GG" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; text-transform: uppercase;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Quantidade de Peças:</label>
+                    <input type="number" id="mov-qtd" min="1" value="1" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Motivo / Observação:</label>
+                    <input type="text" id="mov-motivo" placeholder="Ex: Venda loja física, Reposição, etc." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                </div>
+
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" onclick="fecharModalMovimentacao()" style="padding: 10px 15px; border: 1px solid #ccc; background: #fff; border-radius: 6px; cursor: pointer;">Cancelar</button>
+                    <button type="submit" id="mov-btn-submit" style="padding: 10px 20px; border: none; background: #2E7D32; color: white; font-weight: bold; border-radius: 6px; cursor: pointer;">Confirmar Entrada</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS OBRIGATÓRIOS -->
     <script src="app.js" defer></script>
     <script>
       if ('serviceWorker' in navigator) {
