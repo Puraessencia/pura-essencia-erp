@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌿 Pura Essência ERP v1.0</title>
-    <!-- Link para ícones (usaremos uma fonte de ícones gratuita) -->
+    <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,25 +14,27 @@
         <!-- BARRA LATERAL (SIDEBAR) -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <img src="logo-pura-essencia.png" alt="Pura Essência Logo" class="logo">
+                <img src="logo-pura-essencia.png" alt="Pura Essência Logo" class="logo" onerror="this.style.display='none'">
                 <h1>PURA ESSÊNCIA</h1>
                 <p>ERP v1.0</p>
             </div>
+
+            <!-- Navegação da Fase 2 -->
             <nav class="sidebar-nav">
-    <ul>
-        <li class="active"><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
-        <li><a href="catalogo.html"><i class="fas fa-tags"></i> Catálogo</a></li>
-        <li><a href="estoque.html"><i class="fas fa-box"></i> Estoque</a></li>
-        <li><a href="movimentacoes.html"><i class="fas fa-truck"></i> Movimentações</a></li>
-        <li><a href="relatorios.html"><i class="fas fa-chart-bar"></i> Relatórios</a></li>
-        <li><a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
-    </ul>
-</nav>
+                <ul>
+                    <li class="active"><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="catalogo.html"><i class="fas fa-tags"></i> Catálogo</a></li>
+                    <li><a href="estoque.html"><i class="fas fa-box"></i> Estoque</a></li>
+                    <li><a href="movimentacoes.html"><i class="fas fa-truck"></i> Movimentações</a></li>
+                    <li><a href="relatorios.html"><i class="fas fa-chart-bar"></i> Relatórios</a></li>
+                    <li><a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
+                </ul>
+            </nav>
 
             <div class="sidebar-footer">
                 <p>"Organizando o presente. Preparando o crescimento."</p>
                 <div class="footer-details">
-                    <p>Pura Essência</p>
+                    <p><strong>Pura Essência</strong></p>
                     <p>A beleza da presença no ordinário da vida.</p>
                 </div>
             </div>
@@ -53,13 +55,13 @@
                 <div class="date-display">
                     <i class="fas fa-calendar-alt"></i>
                     <div class="date-text">
-                        <span class="full-date">24 de julho de 2025</span>
-                        <span class="day-of-week">Quinta-feira</span>
+                        <span class="full-date">25 de julho de 2026</span>
+                        <span class="day-of-week">Sábado</span>
                     </div>
                 </div>
             </header>
 
-            <!-- Grade de Cartões de Resumo -->
+            <!-- Grade de Cartões de Resumo (Fase 1) -->
             <section class="summary-cards">
                 <div class="card card-summary">
                     <div class="card-icon"><i class="fas fa-tshirt"></i></div>
@@ -88,14 +90,14 @@
                 <div class="card card-summary value">
                     <div class="card-icon"><i class="fas fa-shopping-bag"></i></div>
                     <div class="card-info">
-                        <h3>Valor total do estoque (custo)</h3>
+                        <h3>Valor total do estoque</h3>
                         <span id="valor" class="card-value">--</span>
                         <p>valor investido</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Seção de Detalhes (Tabelas) -->
+            <!-- Seção de Tabelas Resumidas -->
             <section class="details-grid">
                 <!-- Tabela 1: Estoque por Produto -->
                 <div class="card table-card">
@@ -115,7 +117,7 @@
                             <tr><td>Ele Reina</td><td>16</td></tr>
                         </tbody>
                     </table>
-                    <button class="btn-view-all">Ver todos os produtos</button>
+                    <a href="catalogo.html" class="btn-view-all" style="text-align: center; text-decoration: none;">Ver todos os produtos</a>
                 </div>
 
                 <!-- Tabela 2: Estoque Baixo -->
@@ -137,7 +139,7 @@
                             <tr><td>Ele Reina</td><td>Amarelo</td><td>G</td><td class="stock-alert">1</td></tr>
                         </tbody>
                     </table>
-                    <button class="btn-view-all">Ver todos os alertas</button>
+                    <a href="estoque.html" class="btn-view-all" style="text-align: center; text-decoration: none;">Ver todos os alertas</a>
                 </div>
 
                 <!-- Tabela 3: Últimas Movimentações -->
@@ -148,26 +150,27 @@
                             <tr>
                                 <th>Data</th>
                                 <th>Tipo</th>
-                                <th>Quantidade</th>
+                                <th>Qtd.</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>24/07/2025</td><td>Venda</td><td class="qty-out">-2</td></tr>
-                            <tr><td>24/07/2025</td><td>Entrada</td><td class="qty-in">+10</td></tr>
-                            <tr><td>23/07/2025</td><td>Venda</td><td class="qty-out">-1</td></tr>
+                            <tr><td>25/07/2026</td><td>Venda</td><td class="qty-out">-2</td></tr>
+                            <tr><td>25/07/2026</td><td>Entrada</td><td class="qty-in">+10</td></tr>
+                            <tr><td>24/07/2026</td><td>Venda</td><td class="qty-out">-1</td></tr>
                         </tbody>
                     </table>
-                    <button class="btn-view-all">Ver todas as movimentações</button>
+                    <a href="movimentacoes.html" class="btn-view-all" style="text-align: center; text-decoration: none;">Ver todas as movimentações</a>
                 </div>
             </section>
 
-            <!-- Rodapé da Página Principal -->
+            <!-- Rodapé -->
             <footer class="main-footer">
                 <p>Pura Essência ERP v1.0 • Organizando o presente. Preparando o crescimento. • Feito com propósito 🌿</p>
             </footer>
         </main>
     </div>
 
+    <!-- Script para carregar as estatísticas -->
     <script src="app.js" defer></script>
 </body>
 </html>
