@@ -47,20 +47,21 @@
         <main class="main-content">
             <header class="main-header" style="justify-content: space-between;">
                 <div class="welcome">
-                    <h2>Movimentações de Estoque 🚚</h2>
-                    <p>Registre vendas, entradas de produção e ajustes de peças.</p>
+                    <h2>Entradas e Saídas 🚚</h2>
+                    <p>Registre novos lotes recebidos ou saídas por vendas.</p>
                 </div>
-                <div style="display: flex; gap: 10px;">
-                    <button onclick="abrirModalMovimentacao('ENTRADA')" style="background-color: #2E7D32; color: white; border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                        <i class="fas fa-arrow-down"></i> + Entrada
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="abrirModalEntrada()" style="background-color: #2E7D32; color: white; border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-plus-circle"></i> + Entrada (Lote)
                     </button>
-                    <button onclick="abrirModalMovimentacao('SAIDA')" style="background-color: #C62828; color: white; border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                        <i class="fas fa-arrow-up"></i> - Saída (Venda)
+                    <button onclick="abrirModalSaida()" style="background-color: #C62828; color: white; border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-minus-circle"></i> - Saída (Venda)
                     </button>
                 </div>
             </header>
 
-            <div class="card table-card" style="margin-top: 10px;">
+            <!-- Tabela de Histórico de Movimentações -->
+            <div class="card table-card" style="margin-top: 15px;">
                 <h3>Histórico de Movimentações</h3>
                 <table>
                     <thead>
@@ -68,24 +69,24 @@
                             <th>Data/Hora</th>
                             <th>Tipo</th>
                             <th>SKU</th>
-                            <th>Qtd</th>
-                            <th>Motivo / Observação</th>
+                            <th>Quantidade</th>
+                            <th>Observação / Obs</th>
                         </tr>
                     </thead>
                     <tbody id="tabela-movimentacoes">
                         <tr>
-                            <td>25/07/2026 08:30</td>
-                            <td><span style="background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 4px; font-weight: bold;">ENTRADA</span></td>
-                            <td>TSU-001-VIN-GG</td>
-                            <td>+10</td>
-                            <td>Entrada de Lote Produção</td>
+                            <td>25/07/2026 09:15</td>
+                            <td><span style="background: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 0.85rem;">ENTRADA</span></td>
+                            <td><strong>TSU-001-VIN-GG</strong></td>
+                            <td style="color: #2E7D32; font-weight: bold;">+10 un</td>
+                            <td>Lote Oficina Reposição</td>
                         </tr>
                         <tr>
-                            <td>25/07/2026 09:15</td>
-                            <td><span style="background: #FFEBEE; color: #C62828; padding: 4px 8px; border-radius: 4px; font-weight: bold;">SAÍDA</span></td>
-                            <td>TSO-002-VER-P</td>
-                            <td>-1</td>
-                            <td>Venda e-Commerce #1042</td>
+                            <td>25/07/2026 10:30</td>
+                            <td><span style="background: #FFEBEE; color: #C62828; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 0.85rem;">SAÍDA</span></td>
+                            <td><strong>TSO-002-VER-P</strong></td>
+                            <td style="color: #C62828; font-weight: bold;">-1 un</td>
+                            <td>Venda WhatsApp #1042</td>
                         </tr>
                     </tbody>
                 </table>
@@ -97,35 +98,65 @@
         </main>
     </div>
 
-    <!-- MODAL DE MOVIMENTAÇÃO (ENTRADA / SAÍDA) -->
-    <div id="modal-movimentacao" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
-        <div style="background: white; padding: 25px; border-radius: 12px; max-width: 450px; width: 90%; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 id="mov-titulo" style="margin: 0;"><i class="fas fa-exchange-alt"></i> Nova Movimentação</h3>
-                <button onclick="fecharModalMovimentacao()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+    <!-- MODAL DE ENTRADA (LOTE) -->
+    <div id="modal-entrada" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+        <div class="card" style="width: 90%; max-width: 450px; background: white; padding: 25px; border-radius: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="color: #2E7D32;"><i class="fas fa-plus-circle"></i> Registrar Entrada de Lote</h3>
+                <span onclick="fecharModais()" style="cursor: pointer; font-weight: bold; font-size: 1.2rem;">&times;</span>
             </div>
-
-            <form id="form-movimentacao" onsubmit="salvarMovimentacao(event)">
-                <input type="hidden" id="mov-tipo-val" value="ENTRADA">
-
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">SKU do Produto:</label>
-                    <input type="text" id="mov-sku" placeholder="Ex: TSU-001-VIN-GG" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; text-transform: uppercase;">
+            <form onsubmit="salvarEntrada(event)">
+                <div style="margin-bottom: 12px;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">Selecione o Produto (SKU):</label>
+                    <select id="entrada-sku" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                        <option value="">Selecione...</option>
+                        <option value="TSU-001-VIN-GG">TSU-001-VIN-GG (T-shirt Over / Vinho / GG)</option>
+                        <option value="TSO-002-VER-P">TSO-002-VER-P (T-shirt Regular / Verde / P)</option>
+                    </select>
                 </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Quantidade de Peças:</label>
-                    <input type="number" id="mov-qtd" min="1" value="1" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                <div style="margin-bottom: 12px;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">Quantidade Recebida:</label>
+                    <input type="number" id="entrada-qtd" min="1" required placeholder="Ex: 10" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
                 </div>
-
                 <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Motivo / Observação:</label>
-                    <input type="text" id="mov-motivo" placeholder="Ex: Venda loja física, Reposição, etc." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">Observação / Fornecedor:</label>
+                    <input type="text" id="entrada-obs" placeholder="Ex: Entrada lote de produção" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
                 </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" onclick="fecharModais()" style="flex: 1; padding: 10px; border: 1px solid #ccc; background: white; border-radius: 6px; cursor: pointer;">Cancelar</button>
+                    <button type="submit" style="flex: 1; padding: 10px; background: #2E7D32; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Confirmar Entrada</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-                <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                    <button type="button" onclick="fecharModalMovimentacao()" style="padding: 10px 15px; border: 1px solid #ccc; background: #fff; border-radius: 6px; cursor: pointer;">Cancelar</button>
-                    <button type="submit" id="mov-btn-submit" style="padding: 10px 20px; border: none; background: #2E7D32; color: white; font-weight: bold; border-radius: 6px; cursor: pointer;">Confirmar Entrada</button>
+    <!-- MODAL DE SAÍDA (VENDA) -->
+    <div id="modal-saida" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+        <div class="card" style="width: 90%; max-width: 450px; background: white; padding: 25px; border-radius: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="color: #C62828;"><i class="fas fa-minus-circle"></i> Registrar Saída / Venda</h3>
+                <span onclick="fecharModais()" style="cursor: pointer; font-weight: bold; font-size: 1.2rem;">&times;</span>
+            </div>
+            <form onsubmit="salvarSaida(event)">
+                <div style="margin-bottom: 12px;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">Selecione o Produto (SKU):</label>
+                    <select id="saida-sku" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                        <option value="">Selecione...</option>
+                        <option value="TSU-001-VIN-GG">TSU-001-VIN-GG (T-shirt Over / Vinho / GG)</option>
+                        <option value="TSO-002-VER-P">TSO-002-VER-P (T-shirt Regular / Verde / P)</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">Quantidade Vendida/Baixada:</label>
+                    <input type="number" id="saida-qtd" min="1" required placeholder="Ex: 1" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 5px;">Observação / Pedido:</label>
+                    <input type="text" id="saida-obs" placeholder="Ex: Venda loja online / WhatsApp" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" onclick="fecharModais()" style="flex: 1; padding: 10px; border: 1px solid #ccc; background: white; border-radius: 6px; cursor: pointer;">Cancelar</button>
+                    <button type="submit" style="flex: 1; padding: 10px; background: #C62828; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Confirmar Saída</button>
                 </div>
             </form>
         </div>
@@ -136,6 +167,67 @@
     <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
+      }
+
+      function abrirModalEntrada() {
+        document.getElementById('modal-entrada').style.display = 'flex';
+      }
+
+      function abrirModalSaida() {
+        document.getElementById('modal-saida').style.display = 'flex';
+      }
+
+      function fecharModais() {
+        document.getElementById('modal-entrada').style.display = 'none';
+        document.getElementById('modal-saida').style.display = 'none';
+      }
+
+      function salvarEntrada(e) {
+        e.preventDefault();
+        const sku = document.getElementById('entrada-sku').value;
+        const qtd = document.getElementById('entrada-qtd').value;
+        const obs = document.getElementById('entrada-obs').value || 'Entrada de lote';
+
+        const dataAtual = new Date().toLocaleString('pt-BR');
+        
+        const tabela = document.getElementById('tabela-movimentacoes');
+        const novaLinha = `
+          <tr>
+            <td>${dataAtual}</td>
+            <td><span style="background: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 0.85rem;">ENTRADA</span></td>
+            <td><strong>${sku}</strong></td>
+            <td style="color: #2E7D32; font-weight: bold;">+${qtd} un</td>
+            <td>${obs}</td>
+          </tr>
+        `;
+        tabela.innerHTML = novaLinha + tabela.innerHTML;
+
+        fecharModais();
+        alert('Entrada de ' + qtd + ' unidades registrada com sucesso!');
+      }
+
+      function salvarSaida(e) {
+        e.preventDefault();
+        const sku = document.getElementById('saida-sku').value;
+        const qtd = document.getElementById('saida-qtd').value;
+        const obs = document.getElementById('saida-obs').value || 'Saída / Venda';
+
+        const dataAtual = new Date().toLocaleString('pt-BR');
+
+        const tabela = document.getElementById('tabela-movimentacoes');
+        const novaLinha = `
+          <tr>
+            <td>${dataAtual}</td>
+            <td><span style="background: #FFEBEE; color: #C62828; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 0.85rem;">SAÍDA</span></td>
+            <td><strong>${sku}</strong></td>
+            <td style="color: #C62828; font-weight: bold;">-${qtd} un</td>
+            <td>${obs}</td>
+          </tr>
+        `;
+        tabela.innerHTML = novaLinha + tabela.innerHTML;
+
+        fecharModais();
+        alert('Saída de ' + qtd + ' unidades registrada com sucesso!');
       }
     </script>
 </body>
