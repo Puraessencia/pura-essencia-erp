@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo | Pura Essência ERP</title>
+    <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="container">
+        <!-- BARRA LATERAL (SIDEBAR) -->
         <aside class="sidebar">
             <div class="sidebar-header">
+                <img src="logo-pura-essencia.png" alt="Pura Essência Logo" class="logo" onerror="this.style.display='none'">
                 <h1>PURA ESSÊNCIA</h1>
                 <p>ERP v1.0</p>
             </div>
+
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
@@ -24,19 +29,82 @@
                     <li><a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
                 </ul>
             </nav>
+
+            <div class="sidebar-footer">
+                <p>"Organizando o presente. Preparando o crescimento."</p>
+                <div class="footer-details">
+                    <p><strong>Pura Essência</strong></p>
+                    <p>A beleza da presença no ordinário da vida.</p>
+                </div>
+            </div>
         </aside>
 
+        <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
-            <header class="main-header">
+            <!-- Cabeçalho da Página com Botão -->
+            <header class="main-header" style="justify-content: space-between;">
                 <div class="welcome">
                     <h2>Catálogo de Produtos 🌿</h2>
-                    <p>Gerencie as peças da sua marca.</p>
+                    <p>Gerencie as peças e modelos da sua marca.</p>
                 </div>
+                <!-- Botão Novo Produto (Fase 3) -->
+                <button class="btn-novo-produto" style="background-color: var(--sidebar-bg); color: white; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-plus"></i> Novo Produto
+                </button>
             </header>
-            <div class="card">
-                <h3>Em breve: Lista de Produtos</h3>
+
+            <!-- Tabela do Catálogo (Fase 3) -->
+            <div class="card table-card" style="margin-top: 10px;">
+                <h3>Todos os Produtos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Produto</th>
+                            <th>Tipo</th>
+                            <th>Coleção</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>001</strong></td>
+                            <td>Deus é Fiel</td>
+                            <td>Unissex</td>
+                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Premium</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>002</strong></td>
+                            <td>Lugar Secreto</td>
+                            <td>Oversized</td>
+                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Premium</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>003</strong></td>
+                            <td>Graça Sobre Graça</td>
+                            <td>Baby Look</td>
+                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Essencial</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>004</strong></td>
+                            <td>Caminho, Verdade e Vida</td>
+                            <td>Oversized</td>
+                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Premium</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>005</strong></td>
+                            <td>Ele Reina</td>
+                            <td>Unissex</td>
+                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Essencial</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+
+            <footer class="main-footer">
+                <p>Pura Essência ERP v1.0 • Organizando o presente. Preparando o crescimento. • Feito com propósito 🌿</p>
+            </footer>
         </main>
     </div>
+
 </body>
 </html>
