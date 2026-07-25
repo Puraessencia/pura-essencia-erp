@@ -67,3 +67,50 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.style.setProperty('--sidebar-bg', corSalva);
     }
 });
+// --- LÓGICA DO MODAL DE NOVO PRODUTO ---
+function abrirModalProduto() {
+    document.getElementById('modal-produto').style.display = 'flex';
+    atualizarSkuPreview();
+}
+
+function fecharModalProduto() {
+    document.getElementById('modal-produto').style.display = 'none';
+}
+
+function atualizarSkuPreview() {
+    const cat = document.getElementById('prod-categoria').value;
+    const mod = document.getElementById('prod-modelo').value.trim() || '000';
+    const cor = document.getElementById('prod-cor').value;
+    const tam = document.getElementById('prod-tamanho').value;
+
+    const skuGerado = `${cat}-${mod}-${cor}-${tam}`;
+    document.getElementById('sku-preview').innerText = skuGerado;
+}
+
+// Salvar o produto no Supabase
+async function salvarProduto(event) {
+    event.preventDefault();
+
+    const nome = document.getElementById('prod-nome').value;
+    const cat = document.getElementById('prod-categoria').options[document.getElementById('prod-categoria').selectedIndex].text;
+    const sku = document.getElementById('sku-preview').innerText;
+    const preco = parseFloat(document.getElementById('prod-preco').value);
+    const custo = parseFloat(document.getElementById('prod-custo').value) || 0;
+
+    // Envia para a tabela 'produtos' no Supabase
+    if (typeof supabase !== 'undefined') {
+        const { data, error } = await supabase
+            .from('produtos')
+            .insert([{ sku: sku, nome: nome, categoria: cat, preco_venda: preco, preco_custo: custo }]);
+
+        if (error) {
+            alert('Erro ao salvar no Supabase: ' + error.message);
+            return;
+        }
+    }
+
+    alert(`Produto ${sku} cadastrado com sucesso!`);
+    fecharModalProduto();
+    document.getElementById('form-produto').reset();
+    atualizarSkuPreview();
+}
