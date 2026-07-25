@@ -4,16 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estoque | Pura Essência ERP</title>
+    <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="container">
+        <!-- BARRA LATERAL (SIDEBAR) -->
         <aside class="sidebar">
             <div class="sidebar-header">
+                <img src="logo-pura-essencia.png" alt="Pura Essência Logo" class="logo" onerror="this.style.display='none'">
                 <h1>PURA ESSÊNCIA</h1>
                 <p>ERP v1.0</p>
             </div>
+
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
@@ -24,19 +29,88 @@
                     <li><a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
                 </ul>
             </nav>
+
+            <div class="sidebar-footer">
+                <p>"Organizando o presente. Preparando o crescimento."</p>
+                <div class="footer-details">
+                    <p><strong>Pura Essência</strong></p>
+                    <p>A beleza da presença no ordinário da vida.</p>
+                </div>
+            </div>
         </aside>
 
+        <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
-            <header class="main-header">
+            <!-- Cabeçalho da Página -->
+            <header class="main-header" style="justify-content: space-between;">
                 <div class="welcome">
                     <h2>Controle de Estoque 🌿</h2>
-                    <p>Acompanhe a disponibilidade por SKU.</p>
+                    <p>Acompanhe a quantidade de peças disponíveis por variação (SKU).</p>
                 </div>
+                <!-- Botão para Ajuste de Estoque -->
+                <button class="btn-novo-produto" style="background-color: var(--sidebar-bg); color: white; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-boxes-packing"></i> Entrada / Saída
+                </button>
             </header>
-            <div class="card">
-                <h3>Em breve: Tabela de SKUs</h3>
+
+            <!-- Tabela de SKUs (Fase 4) -->
+            <div class="card table-card" style="margin-top: 10px;">
+                <h3>Peças por SKU</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Cor</th>
+                            <th>Tam.</th>
+                            <th>Estoque</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>TSU-001-PRE-M</code></td>
+                            <td>Preto</td>
+                            <td>M</td>
+                            <td><strong>8</strong></td>
+                        </tr>
+                        <tr>
+                            <td><code>TSU-001-BEG-G</code></td>
+                            <td>Bege</td>
+                            <td>G</td>
+                            <td><strong>5</strong></td>
+                        </tr>
+                        <tr>
+                            <td><code>TSU-001-VIN-GG</code></td>
+                            <td>Vino</td>
+                            <td>GG</td>
+                            <td class="stock-alert">2</td>
+                        </tr>
+                        <tr>
+                            <td><code>TSO-002-VER-P</code></td>
+                            <td>Verde Mata</td>
+                            <td>P</td>
+                            <td class="stock-alert">1</td>
+                        </tr>
+                        <tr>
+                            <td><code>TSB-003-BEG-M</code></td>
+                            <td>Bege</td>
+                            <td>M</td>
+                            <td class="stock-alert">2</td>
+                        </tr>
+                        <tr>
+                            <td><code>TSU-005-AMA-G</code></td>
+                            <td>Amarelo Ouro</td>
+                            <td>G</td>
+                            <td class="stock-alert">1</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+
+            <footer class="main-footer">
+                <p>Pura Essência ERP v1.0 • Organizando o presente. Preparando o crescimento. • Feito com propósito 🌿</p>
+            </footer>
         </main>
     </div>
+
 </body>
 </html>
