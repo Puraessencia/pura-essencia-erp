@@ -4,16 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movimentações | Pura Essência ERP</title>
+    <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#404F3D">
+    <!-- CDN do Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+
     <div class="container">
+        <!-- BARRA LATERAL (SIDEBAR) -->
         <aside class="sidebar">
             <div class="sidebar-header">
+                <img src="logo-pura-essencia.png" alt="Pura Essência Logo" class="logo" onerror="this.style.display='none'">
                 <h1>PURA ESSÊNCIA</h1>
                 <p>ERP v1.0</p>
             </div>
+
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
@@ -24,19 +33,79 @@
                     <li><a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
                 </ul>
             </nav>
+
+            <div class="sidebar-footer">
+                <p>"Organizando o presente. Preparando o crescimento."</p>
+                <div class="footer-details">
+                    <p><strong>Pura Essência</strong></p>
+                    <p>A beleza da presença no ordinário da vida.</p>
+                </div>
+            </div>
         </aside>
 
+        <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
-            <header class="main-header">
+            <header class="main-header" style="justify-content: space-between;">
                 <div class="welcome">
-                    <h2>Movimentações 🌿</h2>
-                    <p>Entradas e saídas registradas.</p>
+                    <h2>Histórico de Movimentações 🌿</h2>
+                    <p>Registro de entradas e saídas do seu estoque.</p>
                 </div>
+                <button class="btn-novo-produto" style="background-color: var(--sidebar-bg); color: white; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-plus-circle"></i> Nova Movimentação
+                </button>
             </header>
-            <div class="card">
-                <h3>Em breve: Histórico de movimentações</h3>
+
+            <div class="card table-card" style="margin-top: 10px;">
+                <h3>Registros Recentes</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipo</th>
+                            <th>SKU / Produto</th>
+                            <th>Qtd.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>25/07/2026</td>
+                            <td><span style="background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Venda</span></td>
+                            <td>TSU-001-VIN-GG (Deus é Fiel)</td>
+                            <td class="qty-out">-2</td>
+                        </tr>
+                        <tr>
+                            <td>25/07/2026</td>
+                            <td><span style="background: #E3F2FD; color: #1565C0; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Entrada</span></td>
+                            <td>TSO-002-VER-P (Lugar Secreto)</td>
+                            <td class="qty-in">+10</td>
+                        </tr>
+                        <tr>
+                            <td>24/07/2026</td>
+                            <td><span style="background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Venda</span></td>
+                            <td>TSB-003-BEG-M (Graça Sobre Graça)</td>
+                            <td class="qty-out">-1</td>
+                        </tr>
+                        <tr>
+                            <td>23/07/2026</td>
+                            <td><span style="background: #FFF3E0; color: #E65100; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">Ajuste</span></td>
+                            <td>TSU-005-AMA-G (Ele Reina)</td>
+                            <td class="qty-out">-1</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+
+            <footer class="main-footer">
+                <p>Pura Essência ERP v1.0 • Organizando o presente. Preparando o crescimento. • Feito com propósito 🌿</p>
+            </footer>
         </main>
     </div>
+
+    <script src="app.js" defer></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+      }
+    </script>
 </body>
 </html>
