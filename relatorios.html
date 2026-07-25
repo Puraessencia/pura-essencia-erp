@@ -47,68 +47,45 @@
         <main class="main-content">
             <header class="main-header">
                 <div class="welcome">
-                    <h2>Relatórios e Análises 🌿</h2>
-                    <p>Visão geral do desempenho da sua marca.</p>
+                    <h2>Relatórios e Indicadores 📊</h2>
+                    <p>Acompanhe o desempenho das peças e o fluxo da marca.</p>
                 </div>
             </header>
 
-            <!-- Cards Resumidos do Relatório -->
-            <section class="summary-cards" style="margin-top: 10px;">
-                <div class="card card-summary">
-                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
-                    <div class="card-info">
-                        <h3>Mais Vendido</h3>
-                        <span class="card-value" style="font-size: 1.2rem;">Deus é Fiel</span>
-                        <p>28 unidades este mês</p>
-                    </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px;">
+                <div class="card">
+                    <h3><i class="fas fa-fire" style="color: #C62828;"></i> Peças Mais Vendidas</h3>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">Ranking dos itens com maior saída no período.</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                            <span>1. TSU-001-VIN-GG (Deus é Fiel)</span>
+                            <strong>18 un</strong>
+                        </li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between;">
+                            <span>2. TSO-002-VER-P (Lugar Secreto)</span>
+                            <strong>14 un</strong>
+                        </li>
+                        <li style="padding: 8px 0; display: flex; justify-content: space-between;">
+                            <span>3. TSU-003-PRE-M (Graça)</span>
+                            <strong>9 un</strong>
+                        </li>
+                    </ul>
                 </div>
-                <div class="card card-summary value">
-                    <div class="card-icon"><i class="fas fa-coins"></i></div>
-                    <div class="card-info">
-                        <h3>Faturamento Estimado</h3>
-                        <span class="card-value" style="font-size: 1.2rem;">R$ 8.450,00</span>
-                        <p>mês atual</p>
-                    </div>
-                </div>
-                <div class="card card-summary alert">
-                    <div class="card-icon"><i class="fas fa-sync"></i></div>
-                    <div class="card-info">
-                        <h3>Giro de Estoque</h3>
-                        <span class="card-value" style="font-size: 1.2rem;">Alta Rotatividade</span>
-                        <p>Coleção Premium</p>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Tabela Resumo das Peças -->
-            <div class="card table-card" style="margin-top: 20px;">
-                <h3>Resumo por Categoria</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Categoria</th>
-                            <th>Total em Estoque</th>
-                            <th>Valor Estimado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Oversized</td>
-                            <td>240 peças</td>
-                            <td>R$ 5.280,00</td>
-                        </tr>
-                        <tr>
-                            <td>Unissex</td>
-                            <td>310 peças</td>
-                            <td>R$ 6.200,00</td>
-                        </tr>
-                        <tr>
-                            <td>Baby Look</td>
-                            <td>184 peças</td>
-                            <td>R$ 3.100,00</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="card">
+                    <h3><i class="fas fa-balance-scale" style="color: #2E7D32;"></i> Resumo de Movimentações</h3>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">Balanço geral de entradas e saídas.</p>
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
+                        <div style="background: #E8F5E9; padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #2E7D32; font-weight: bold;"><i class="fas fa-arrow-down"></i> Total Entradas (Lotes)</span>
+                            <strong style="color: #2E7D32; font-size: 1.1rem;">+60 un</strong>
+                        </div>
+                        <div style="background: #FFEBEE; padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: #C62828; font-weight: bold;"><i class="fas fa-arrow-up"></i> Total Saídas (Vendas)</span>
+                            <strong style="color: #C62828; font-size: 1.1rem;">-41 un</strong>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <footer class="main-footer">
@@ -117,6 +94,7 @@
         </main>
     </div>
 
+    <!-- SCRIPTS OBRIGATÓRIOS -->
     <script src="app.js" defer></script>
     <script>
       if ('serviceWorker' in navigator) {
