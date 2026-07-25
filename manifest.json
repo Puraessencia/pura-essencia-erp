@@ -1,0 +1,22 @@
+{
+  "short_name": "Pura Essência",
+  "name": "Pura Essência ERP",
+  "icons": [
+    {
+      "src": "logo-pura-essencia.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo-pura-essencia.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#F3F1EC",
+  "theme_color": "#404F3D",
+  "display": "standalone",
+  "orientation": "portrait"
+}
+
