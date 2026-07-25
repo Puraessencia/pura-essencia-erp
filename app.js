@@ -51,3 +51,19 @@ function exibirDadosFallback() {
 
 // Executa ao carregar a página
 document.addEventListener('DOMContentLoaded', carregarEstatisticas);
+// --- FUNÇÃO PARA ALTERAR AS CORES DO SISTEMA ---
+function mudarCor(novaCor) {
+    // Altera a cor principal do menu CSS
+    document.documentElement.style.setProperty('--sidebar-bg', novaCor);
+    
+    // Salva a cor escolhida na memória do navegador
+    localStorage.setItem('temaCor', novaCor);
+}
+
+// Aplica a cor salva assim que qualquer página do sistema é aberta
+document.addEventListener('DOMContentLoaded', () => {
+    const corSalva = localStorage.getItem('temaCor');
+    if (corSalva) {
+        document.documentElement.style.setProperty('--sidebar-bg', corSalva);
+    }
+});
