@@ -4,16 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatórios | Pura Essência ERP</title>
+    <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#404F3D">
+    <!-- CDN do Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+
     <div class="container">
+        <!-- BARRA LATERAL (SIDEBAR) -->
         <aside class="sidebar">
             <div class="sidebar-header">
+                <img src="logo-pura-essencia.png" alt="Pura Essência Logo" class="logo" onerror="this.style.display='none'">
                 <h1>PURA ESSÊNCIA</h1>
                 <p>ERP v1.0</p>
             </div>
+
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
@@ -24,19 +33,95 @@
                     <li><a href="configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
                 </ul>
             </nav>
+
+            <div class="sidebar-footer">
+                <p>"Organizando o presente. Preparando o crescimento."</p>
+                <div class="footer-details">
+                    <p><strong>Pura Essência</strong></p>
+                    <p>A beleza da presença no ordinário da vida.</p>
+                </div>
+            </div>
         </aside>
 
+        <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
             <header class="main-header">
                 <div class="welcome">
-                    <h2>Relatórios 🌿</h2>
-                    <p>Métricas e análises da marca.</p>
+                    <h2>Relatórios e Análises 🌿</h2>
+                    <p>Visão geral do desempenho da sua marca.</p>
                 </div>
             </header>
-            <div class="card">
-                <h3>Em breve: Relatórios detalhados</h3>
+
+            <!-- Cards Resumidos do Relatório -->
+            <section class="summary-cards" style="margin-top: 10px;">
+                <div class="card card-summary">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="card-info">
+                        <h3>Mais Vendido</h3>
+                        <span class="card-value" style="font-size: 1.2rem;">Deus é Fiel</span>
+                        <p>28 unidades este mês</p>
+                    </div>
+                </div>
+                <div class="card card-summary value">
+                    <div class="card-icon"><i class="fas fa-coins"></i></div>
+                    <div class="card-info">
+                        <h3>Faturamento Estimado</h3>
+                        <span class="card-value" style="font-size: 1.2rem;">R$ 8.450,00</span>
+                        <p>mês atual</p>
+                    </div>
+                </div>
+                <div class="card card-summary alert">
+                    <div class="card-icon"><i class="fas fa-sync"></i></div>
+                    <div class="card-info">
+                        <h3>Giro de Estoque</h3>
+                        <span class="card-value" style="font-size: 1.2rem;">Alta Rotatividade</span>
+                        <p>Coleção Premium</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tabela Resumo das Peças -->
+            <div class="card table-card" style="margin-top: 20px;">
+                <h3>Resumo por Categoria</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Total em Estoque</th>
+                            <th>Valor Estimado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Oversized</td>
+                            <td>240 peças</td>
+                            <td>R$ 5.280,00</td>
+                        </tr>
+                        <tr>
+                            <td>Unissex</td>
+                            <td>310 peças</td>
+                            <td>R$ 6.200,00</td>
+                        </tr>
+                        <tr>
+                            <td>Baby Look</td>
+                            <td>184 peças</td>
+                            <td>R$ 3.100,00</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+
+            <footer class="main-footer">
+                <p>Pura Essência ERP v1.0 • Organizando o presente. Preparando o crescimento. • Feito com propósito 🌿</p>
+            </footer>
         </main>
     </div>
+
+    <script src="app.js" defer></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+      }
+    </script>
 </body>
 </html>
