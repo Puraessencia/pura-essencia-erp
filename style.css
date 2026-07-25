@@ -1,15 +1,27 @@
-.card{
+body{
+    font-family: Arial;
     background:#F7F4EE;
-    border-radius:20px;
-    padding:20px;
-    box-shadow:0 5px 20px rgba(0,0,0,.05);
+    padding:30px;
 }
 
-.card h3{
+h1{
     color:#355E3B;
 }
 
+.card{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    margin-top:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.card h3{
+    color:#7B4F35;
+}
+
 .card span{
-    font-size:40px;
+    font-size:36px;
     font-weight:bold;
+    color:#355E3B;
 }
