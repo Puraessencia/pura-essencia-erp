@@ -7,9 +7,10 @@
     <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#404F3D">
     <!-- CDN do Supabase JS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -44,66 +45,53 @@
 
         <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
-            <!-- Cabeçalho da Página -->
             <header class="main-header" style="justify-content: space-between;">
                 <div class="welcome">
-                    <h2>Controle de Estoque 🌿</h2>
-                    <p>Acompanhe a quantidade de peças disponíveis por variação (SKU).</p>
+                    <h2>Controle de Estoque 📦</h2>
+                    <p>Acompanhe a quantidade disponível de cada SKU em tempo real.</p>
                 </div>
-                <!-- Botão para Ajuste de Estoque -->
-                <button class="btn-novo-produto" style="background-color: var(--sidebar-bg); color: white; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-boxes-packing"></i> Entrada / Saída
-                </button>
+                <div>
+                    <a href="movimentacoes.html" style="background-color: var(--sidebar-bg); color: white; border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-exchange-alt"></i> Dar Entrada / Saída
+                    </a>
+                </div>
             </header>
 
-            <!-- Tabela de SKUs (Fase 4) -->
-            <div class="card table-card" style="margin-top: 10px;">
-                <h3>Peças por SKU</h3>
+            <!-- Campo de Busca Rápida -->
+            <div class="card" style="margin-top: 15px; padding: 15px;">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <i class="fas fa-search" style="color: #666;"></i>
+                    <input type="text" id="input-busca-estoque" onkeyup="filtrarEstoque()" placeholder="Buscar por SKU, nome do produto ou cor..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem;">
+                </div>
+            </div>
+
+            <!-- Tabela de Peças em Estoque -->
+            <div class="card table-card" style="margin-top: 15px;">
+                <h3>Nível de Estoque por Peça</h3>
                 <table>
                     <thead>
                         <tr>
                             <th>SKU</th>
-                            <th>Cor</th>
-                            <th>Tam.</th>
-                            <th>Estoque</th>
+                            <th>Produto / Estampa</th>
+                            <th>Tamanho</th>
+                            <th>Qtd em Estoque</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabela-estoque">
                         <tr>
-                            <td><code>TSU-001-PRE-M</code></td>
-                            <td>Preto</td>
-                            <td>M</td>
-                            <td><strong>8</strong></td>
-                        </tr>
-                        <tr>
-                            <td><code>TSU-001-BEG-G</code></td>
-                            <td>Bege</td>
-                            <td>G</td>
-                            <td><strong>5</strong></td>
-                        </tr>
-                        <tr>
-                            <td><code>TSU-001-VIN-GG</code></td>
-                            <td>Vino</td>
+                            <td><strong>TSU-001-VIN-GG</strong></td>
+                            <td>Deus é Fiel</td>
                             <td>GG</td>
-                            <td class="stock-alert">2</td>
+                            <td><strong style="font-size: 1.1rem;">12</strong> un</td>
+                            <td><span style="background: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 0.85rem;">Normal</span></td>
                         </tr>
                         <tr>
-                            <td><code>TSO-002-VER-P</code></td>
-                            <td>Verde Mata</td>
+                            <td><strong>TSO-002-VER-P</strong></td>
+                            <td>Lugar Secreto</td>
                             <td>P</td>
-                            <td class="stock-alert">1</td>
-                        </tr>
-                        <tr>
-                            <td><code>TSB-003-BEG-M</code></td>
-                            <td>Bege</td>
-                            <td>M</td>
-                            <td class="stock-alert">2</td>
-                        </tr>
-                        <tr>
-                            <td><code>TSU-005-AMA-G</code></td>
-                            <td>Amarelo Ouro</td>
-                            <td>G</td>
-                            <td class="stock-alert">1</td>
+                            <td><strong style="font-size: 1.1rem; color: #C62828;">2</strong> un</td>
+                            <td><span style="background: #FFEBEE; color: #C62828; padding: 4px 10px; border-radius: 12px; font-weight: bold; font-size: 0.85rem;">Estoque Baixo</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -115,5 +103,23 @@
         </main>
     </div>
 
+    <!-- SCRIPTS OBRIGATÓRIOS -->
+    <script src="app.js" defer></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+      }
+
+      // Função de filtro rápido na tabela
+      function filtrarEstoque() {
+        const termo = document.getElementById('input-busca-estoque').value.toLowerCase();
+        const linhas = document.querySelectorAll('#tabela-estoque tr');
+        
+        linhas.forEach(linha => {
+          const texto = linha.innerText.toLowerCase();
+          linha.style.display = texto.includes(termo) ? '' : 'none';
+        });
+      }
+    </script>
 </body>
 </html>
