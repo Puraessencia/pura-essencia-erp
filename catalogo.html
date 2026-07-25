@@ -7,9 +7,10 @@
     <!-- Ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#404F3D">
     <!-- CDN do Supabase JS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -44,60 +45,39 @@
 
         <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
-            <!-- Cabeçalho da Página com Botão -->
             <header class="main-header" style="justify-content: space-between;">
                 <div class="welcome">
                     <h2>Catálogo de Produtos 🌿</h2>
-                    <p>Gerencie as peças e modelos da sua marca.</p>
+                    <p>Gerencie o cadastro das suas peças e modelos.</p>
                 </div>
-                <!-- Botão Novo Produto (Fase 3) -->
-                <button class="btn-novo-produto" style="background-color: var(--sidebar-bg); color: white; padding: 12px 20px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-plus"></i> Novo Produto
+                <button onclick="abrirModalProduto()" style="background-color: var(--sidebar-bg); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-plus-circle"></i> Novo Produto
                 </button>
             </header>
 
-            <!-- Tabela do Catálogo (Fase 3) -->
             <div class="card table-card" style="margin-top: 10px;">
-                <h3>Todos os Produtos</h3>
+                <h3>Peças Cadastradas</h3>
                 <table>
                     <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Produto</th>
-                            <th>Tipo</th>
-                            <th>Coleção</th>
+                            <th>SKU</th>
+                            <th>Nome da Estampa / Produto</th>
+                            <th>Categoria</th>
+                            <th>Preço Venda</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabela-catalogo">
                         <tr>
-                            <td><strong>001</strong></td>
+                            <td>TSU-001-VIN-GG</td>
                             <td>Deus é Fiel</td>
-                            <td>Unissex</td>
-                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Premium</span></td>
+                            <td>T-shirt Unissex</td>
+                            <td>R$ 89,90</td>
                         </tr>
                         <tr>
-                            <td><strong>002</strong></td>
+                            <td>TSO-002-VER-P</td>
                             <td>Lugar Secreto</td>
-                            <td>Oversized</td>
-                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Premium</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>003</strong></td>
-                            <td>Graça Sobre Graça</td>
-                            <td>Baby Look</td>
-                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Essencial</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>004</strong></td>
-                            <td>Caminho, Verdade e Vida</td>
-                            <td>Oversized</td>
-                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Premium</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>005</strong></td>
-                            <td>Ele Reina</td>
-                            <td>Unissex</td>
-                            <td><span style="background: #EBE8E0; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem;">Essencial</span></td>
+                            <td>T-shirt Over</td>
+                            <td>R$ 98,90</td>
                         </tr>
                     </tbody>
                 </table>
@@ -109,5 +89,104 @@
         </main>
     </div>
 
+    <!-- MODAL DE CADASTRO DE PRODUTO -->
+    <div id="modal-produto" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;">
+        <div style="background: white; padding: 25px; border-radius: 12px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0;"><i class="fas fa-tag"></i> Novo Produto</h3>
+                <button onclick="fecharModalProduto()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+
+            <form id="form-produto" onsubmit="salvarProduto(event)">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Nome da Estampa / Coleção:</label>
+                    <input type="text" id="prod-nome" placeholder="Ex: Deus é Fiel" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Categoria:</label>
+                        <select id="prod-categoria" onchange="atualizarSkuPreview()" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                            <option value="TSO">TSO - T-shirt Over</option>
+                            <option value="TSF">TSF - T-shirt Feminina</option>
+                            <option value="TSM">TSM - T-shirt Masculina</option>
+                            <option value="TSU" selected>TSU - T-shirt Unissex</option>
+                            <option value="MUC">MUC - Moletom c/ Capuz</option>
+                            <option value="MUS">MUS - Moletom s/ Capuz</option>
+                            <option value="MID">MID - Vestido Midi</option>
+                            <option value="VTB">VTB - Vestido Tubinho</option>
+                            <option value="VLG">VLG - Vestido Longo</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Nº Modelo (Estampa):</label>
+                        <input type="text" id="prod-modelo" placeholder="Ex: 001" oninput="atualizarSkuPreview()" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Cor:</label>
+                        <select id="prod-cor" onchange="atualizarSkuPreview()" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                            <option value="PRE">PRE - Preto</option>
+                            <option value="MAR">MAR - Marrom</option>
+                            <option value="BEG">BEG - Bege</option>
+                            <option value="ARG">ARG - Argila</option>
+                            <option value="BRA">BRA - Branco</option>
+                            <option value="VIN" selected>VIN - Vinho</option>
+                            <option value="VRL">VRL - Vermelho</option>
+                            <option value="VER">VER - Verde</option>
+                            <option value="VMT">VMT - Verde Mata</option>
+                            <option value="OFF">OFF - Off White</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Tamanho:</label>
+                        <select id="prod-tamanho" onchange="atualizarSkuPreview()" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                            <option value="PP">PP</option>
+                            <option value="P">P</option>
+                            <option value="M">M</option>
+                            <option value="G">G</option>
+                            <option value="GG" selected>GG</option>
+                            <option value="XG">XG</option>
+                            <option value="G1">G1</option>
+                            <option value="G2">G2</option>
+                            <option value="G3">G3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Preview do SKU Gerado -->
+                <div style="background: #F4F6F4; padding: 12px; border-radius: 6px; text-align: center; margin-bottom: 15px;">
+                    <span style="font-size: 0.85rem; color: #666;">SKU que será gerado:</span>
+                    <h4 id="sku-preview" style="margin: 5px 0 0 0; color: var(--sidebar-bg); letter-spacing: 1px;">TSU-001-VIN-GG</h4>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Preço Custo (R$):</label>
+                        <input type="number" step="0.01" id="prod-custo" placeholder="35.00" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: bold; margin-bottom: 5px;">Preço Venda (R$):</label>
+                        <input type="number" step="0.01" id="prod-preco" placeholder="89.90" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" onclick="fecharModalProduto()" style="padding: 10px 15px; border: 1px solid #ccc; background: #fff; border-radius: 6px; cursor: pointer;">Cancelar</button>
+                    <button type="submit" style="padding: 10px 20px; border: none; background: var(--sidebar-bg); color: white; font-weight: bold; border-radius: 6px; cursor: pointer;">Salvar no Supabase</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS OBRIGATÓRIOS -->
+    <script src="app.js" defer></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+      }
+    </script>
 </body>
 </html>
